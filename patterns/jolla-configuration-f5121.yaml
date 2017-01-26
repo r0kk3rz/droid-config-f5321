@@ -9,6 +9,8 @@ Requires:
 - pattern:jolla-ui-wayland
 # Early stages of porting benefit from these:
 - pattern:sailfish-porter-tools
+- csd
+- sd-utils
 
 Summary: Jolla Configuration f5121
 
