@@ -14,5 +14,8 @@
 # Device-specific ofono configuration
 Provides: ofono-configs
 
+# Device-specific usb-moded configuration
+Provides: usb-moded-configs
+
 %include droid-configs-device/droid-configs.inc
 
