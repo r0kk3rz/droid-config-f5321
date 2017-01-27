@@ -11,6 +11,7 @@ Requires:
 - pattern:sailfish-porter-tools
 - csd
 - sd-utils
+- geoclue-provider-mlsdb
 
 Summary: Jolla Configuration f5121
 
