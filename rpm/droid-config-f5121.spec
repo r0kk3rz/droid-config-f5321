@@ -11,5 +11,11 @@
 # Other screen sizes and ratios will require more trial-and-error.
 %define pixel_ratio 1.8
 
+# Device-specific ofono configuration
+Provides: ofono-configs
+
+# Device-specific usb-moded configuration
+Provides: usb-moded-configs
+
 %include droid-configs-device/droid-configs.inc
 
