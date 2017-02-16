@@ -4,10 +4,6 @@
 Description: Pattern with packages for f5121 HW Adaptation
 Name: jolla-hw-adaptation-f5121
 Requires:
-- pattern:jolla-hw-adaptation-hybris
-- pattern:jolla-hw-adaptation-hybris-droid-vibrator
-- pattern:jolla-ui-configuration-f5121
-
 - droid-hal-f5121
 - droid-hal-f5121-img-boot
 - droid-hal-f5121-kernel-modules
@@ -16,8 +12,23 @@ Requires:
 - droid-config-f5121-policy-settings
 - droid-config-f5121-preinit-plugin
 - droid-config-f5121-flashing
-- droid-config-f5121-bluez4
+- droid-config-f5121-bluez5
 - droid-hal-version-f5121
+
+# Hybris packages
+- libhybris-libEGL
+- libhybris-libGLESv2
+- libhybris-libwayland-egl
+
+# Sensors
+- hybris-libsensorfw-qt5
+
+# Vibra
+- ngfd-plugin-droid-vibrator
+- qt5-feedback-haptics-droid-vibrator
+
+# Needed for /dev/touchscreen symlink
+- qt5-plugin-generic-evdev
 
 - pulseaudio-modules-droid
 # for audio recording to work:
@@ -46,14 +57,7 @@ Requires:
 - rfkill
 
 # enable device lock and allow to select untrusted software
-- jolla-devicelock-plugin-encsfa
-
-# Settings app needs this since update15
-- jolla-settings-layout
-
-# For devices with cellular modem. Those without one, please comment out:
-- pattern:jolla-sailfish-cellular-apps
-- telepathy-ring
+- jolla-devicelock-daemon-encsfa
 
 # For devices where test_gps eventually gets a fix:
 - geoclue-provider-hybris

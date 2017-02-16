@@ -5,10 +5,12 @@ Description: Pattern with packages for f5121 configurations
 Name: jolla-configuration-f5121
 Requires:
 - pattern:jolla-hw-adaptation-f5121
-- pattern:jolla-sailfish-applications
-- pattern:jolla-ui-wayland
-# Early stages of porting benefit from these:
-- pattern:sailfish-porter-tools
+
+- patterns-sailfish-applications
+- patterns-sailfish-ui
+- patterns-sailfish-cellular-apps
+
+- sailfish-content-graphics-z@ICON_RES@
 - csd
 - sd-utils
 - geoclue-provider-mlsdb
