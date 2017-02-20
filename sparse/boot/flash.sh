@@ -68,7 +68,7 @@ case $UNAME in
 esac
 
 VENDORIDLIST=(
-"18d1"
+"0fce"
 )
 
 echo "Searching device to flash.."
