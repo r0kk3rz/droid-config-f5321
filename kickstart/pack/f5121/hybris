@@ -1,0 +1,97 @@
+pushd $IMG_OUT_DIR
+
+MD5SUMFILE=md5.lst
+
+DEVICE_VERSION_FILE=./hw-release
+
+EXTRA_NAME=""
+
+if [ -n "@EXTRA_NAME@" ] && [ "@EXTRA_NAME@" != @"EXTRA_NAME"@ ]; then
+  EXTRA_NAME="@EXTRA_NAME@-"
+fi
+
+DEVICE=""
+DEVICE_VERSION=""
+
+if [[ -a $DEVICE_VERSION_FILE ]]; then
+  source $DEVICE_VERSION_FILE
+  DEVICE=$MER_HA_DEVICE
+  DEVICE_VERSION=-$VERSION_ID
+fi
+
+source ./sailfish-release
+if [ "$SSU_RELEASE_TYPE" = "rnd" ]; then
+  RELEASENAME=$NAME-${EXTRA_NAME// /_}$SAILFISH_FLAVOUR-$VERSION_ID-$DEVICE$DEVICE_VERSION
+else
+  RELEASENAME=$NAME-${EXTRA_NAME// /_}$VERSION_ID-$DEVICE$DEVICE_VERSION
+fi
+
+# Setup LVM image
+dd if=/dev/zero bs=1 count=0 of=temp.img seek=3000M
+LVM_LOOP=$(/sbin/losetup -f)
+/sbin/losetup $LVM_LOOP temp.img
+/usr/sbin/pvcreate $LVM_LOOP
+/usr/sbin/vgcreate sailfish $LVM_LOOP
+
+# Resize root and home to minimum
+ROOT_LOOP=$(/sbin/losetup -f)
+/sbin/losetup $ROOT_LOOP root.img
+/sbin/e2fsck -f -y $ROOT_LOOP
+BLOCKS=$(/sbin/resize2fs -M $ROOT_LOOP | /bin/grep "The filesystem on" | /bin/cut -d ' ' -f 7)
+echo We got ourselves root blocks _ $BLOCKS _
+SIZE=$(/usr/bin/expr $BLOCKS \* 4096)
+echo after maths size _ $SIZE _
+/usr/sbin/lvcreate -L ${SIZE}B --name root sailfish
+/bin/sync
+/sbin/losetup -d $ROOT_LOOP
+/usr/sbin/vgchange -a y
+dd if=root.img bs=4096 count=$BLOCKS of=/dev/sailfish/root
+
+HOME_LOOP=$(/sbin/losetup -f)
+/sbin/losetup $HOME_LOOP home.img
+/sbin/e2fsck -f -y $HOME_LOOP
+BLOCKS=$(/sbin/resize2fs -M $HOME_LOOP | /bin/grep "The filesystem on" | /bin/cut -d ' ' -f 7)
+echo We got ourselves home size _ $BLOCKS _
+SIZE=$(/usr/bin/expr $BLOCKS \* 4096)
+
+/usr/sbin/lvcreate -L ${SIZE}B --name home sailfish
+/bin/sync
+/sbin/losetup -d $HOME_LOOP
+/usr/sbin/vgchange -a y
+dd if=home.img bs=4096 count=$BLOCKS of=/dev/sailfish/home
+
+/usr/sbin/vgchange -a n sailfish
+
+rm home.img root.img
+/sbin/losetup -d $LVM_LOOP
+
+mv temp.img sailfish.img
+
+/usr/bin/atruncate sailfish.img
+# To make the file magic right lets convert to single file sparse image.
+# 3456M size is selected so that we always will have only one file as output.
+/usr/bin/img2simg -C 3456M sailfish.img
+rm sailfish.img
+
+chmod 755 flash.*
+
+FILES="flash* *.img*"
+FILES_TO_COPY="*.urls"
+
+mkdir -p ${RELEASENAME}
+cp ${FILES_TO_COPY} ${RELEASENAME}/
+
+mv ${FILES} ${RELEASENAME}/
+
+# Calculate md5sums of files included to the tarball
+cd ${RELEASENAME}
+md5sum * > $MD5SUMFILE
+cd ..
+
+# Package stuff back to tarball
+tar -cjf ${RELEASENAME}.tar.bz2 $RELEASENAME
+
+# Remove the files from the output directory
+rm -r ${RELEASENAME}
+
+popd

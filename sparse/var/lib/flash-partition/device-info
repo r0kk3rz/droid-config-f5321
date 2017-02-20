@@ -1,0 +1,19 @@
+CPUCHECK_STRING="Qualcomm Technologies, Inc MSM8956"
+
+# Because of flash-partition checks 1 needs to be defined
+# Others can go with parition numbers
+PART_1="modem"
+PART_19="splash"
+PART_20="aboot"
+PART_22="boot"
+PART_24="cache"
+PART_52="system"
+
+PART_REAL_1="mmcblk0p3"
+PART_REAL_19="mmcblk0p19"
+PART_REAL_20="mmcblk0p20"
+PART_REAL_22="mmcblk0p22"
+PART_REAL_24="mmcblk0p24"
+PART_REAL_52="mmcblk0p52"
+
+PART_I="1 19 20 22 24 52"
