@@ -18,6 +18,10 @@ Requires:
 - libhybris-libEGL
 - libhybris-libGLESv2
 - libhybris-libwayland-egl
+# This new reworked libhybris (minimalhooks) now contains the linker, but
+# eventually will require to split into libsf as well for mediatek devices.
+# Keeping everything in detritus for now before splitting
+- libhybris-detritus
 
 # Sensors
 - hybris-libsensorfw-qt5
