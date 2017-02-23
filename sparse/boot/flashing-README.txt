@@ -1,4 +1,13 @@
 
+= PRE STEPS FOR FLASHING ON TOP OF THE ANDROID BUILD =
+
+If SONY Xperia X is running Android you need to unlock bootloader before you can
+flash Sailfish OS with these instructions. SONY has provided own instructions how
+to unlock bootloader. You can follow instructions from here:
+
+https://developer.sonymobile.com/unlockbootloader/unlock-yourboot-loader/
+
+
 = FLASHING =
 
 Before starting flashing on any host turn off the device. After this follow the
@@ -31,7 +40,7 @@ Next:
 
 NOTE: If flashing does not succeed, you might have missing fastboot binary or
 it is too old. Many distros include andoid-tools package, but that might not
-be new enough to support p4903 flashing.
+be new enough to support Xperia X flashing.
 
 Installation commands for some linux distributions:
 * Ubuntu: sudo apt-get install android-tools-fastboot
