@@ -40,7 +40,7 @@ Next:
 
 NOTE: If flashing does not succeed, you might have missing fastboot binary or
 it is too old. Many distros include andoid-tools package, but that might not
-be new enough to support p4903 flashing.
+be new enough to support Xperia X flashing.
 
 Installation commands for some linux distributions:
 * Ubuntu: sudo apt-get install android-tools-fastboot
