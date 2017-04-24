@@ -1,7 +1,7 @@
 [apps/jolla-camera/primary/image]
-imageResolution='2592x1944'
-videoResolution='3840x2160'
-viewfinderResolution='1440x1080'
+imageResolution='3840x2160'
+videoResolution='1920x1080'
+viewfinderResolution='1920x1080'
 isoValues=[0, 100, 200, 400]
 whiteBalanceValues=[0, 3, 2, 6, 5]
 focusDistanceValues=[8, 4, 16]
@@ -11,13 +11,13 @@ imageResolution_4_3='2592x1944'
 imageResolution_16_9='3840x2160'
 viewfinderResolution_4_3='1280x960'
 viewfinderResolution_16_9='1920x1080'
-resolutionText_4_3='camera_settings-me-4-3-8m'
-resolutionText_16_9='camera_settings-me-16-9-6m'
+resolutionText_4_3='camera_settings-me-4-3-5m'
+resolutionText_16_9='camera_settings-me-16-9-8m'
 focusDistance=16
 
 [apps/jolla-camera/secondary/image]
 imageResolution='4160x3120'
-videoResolution='3840x2160'
+videoResolution='1920x1080'
 viewfinderResolution='1440x1080'
 isoValues=[0, 100, 200, 400]
 whiteBalanceValues=[0, 3, 2, 6, 5]
@@ -28,13 +28,13 @@ imageResolution_4_3='4160x3120'
 imageResolution_16_9='3840x2160'
 viewfinderResolution_4_3='1280x960'
 viewfinderResolution_16_9='1920x1080'
-resolutionText_4_3='camera_settings-me-4-3-2m'
-resolutionText_16_9='camera_settings-me-16-9-1m'
+resolutionText_4_3='camera_settings-me-4-3-13m'
+resolutionText_16_9='camera_settings-me-16-9-8m'
 focusDistance=4
 
 [apps/jolla-camera/primary/video]
-imageResolution='3840x2160'
-videoResolution='3840x2160'
+imageResolution='1920x1080'
+videoResolution='1920x1080'
 viewfinderResolution='1920x1080'
 isoValues=[0, 100, 200, 400]
 whiteBalanceValues=[0, 3, 2, 6, 5]
@@ -44,8 +44,8 @@ exposureCompensationValues=[4, 2, 0, -2, -4]
 focusDistance=16
 
 [apps/jolla-camera/secondary/video]
-imageResolution='3840x2160'
-videoResolution='3840x2160'
+imageResolution='1920x1080'
+videoResolution='1920x1080'
 viewfinderResolution='1920x1080'
 isoValues=[0, 100, 200, 400]
 whiteBalanceValues=[0, 3, 2, 6, 5]
