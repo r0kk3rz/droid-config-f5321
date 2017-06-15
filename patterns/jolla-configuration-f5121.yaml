@@ -14,6 +14,7 @@ Requires:
 - csd
 - sd-utils
 - geoclue-provider-mlsdb
+- jolla-settings-system-flashlight
 
 Summary: Jolla Configuration f5121
 

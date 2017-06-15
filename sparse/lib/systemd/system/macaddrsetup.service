@@ -1,0 +1,15 @@
+[Unit]
+Description=macaddrsetup
+After=droid-hal-init.service
+Before=connman.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/sh /usr/bin/droid/macaddrsetup.sh
+# This is what the service should look call, if connman supported wlan mac changes
+#ExecStart=/system/bin/macaddrsetup /sys/devices/soc.0/bcmdhd_wlan.115/macaddr
+
+
+[Install]
+WantedBy=network.target
