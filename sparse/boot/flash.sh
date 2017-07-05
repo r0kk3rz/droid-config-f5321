@@ -156,6 +156,11 @@ for IMAGE in "${IMAGES[@]}"; do
   $FLASHCMD $partition $ifile
 done
 
+# Flashing fimage to system partition
+for x in fimage.img0*; do
+  $FLASHCMD system $x
+done
+
 # Flashing to userdata for now..
 for x in sailfish.img0*; do
   $FLASHCMD userdata $x

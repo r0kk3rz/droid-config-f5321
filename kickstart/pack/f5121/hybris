@@ -62,7 +62,37 @@ dd if=home.img bs=4096 count=$BLOCKS of=/dev/sailfish/home
 
 /usr/sbin/vgchange -a n sailfish
 
-rm home.img root.img
+# Temporary dir for making factory image backups.
+FIMAGE_TEMP=$(mktemp -d -p $(pwd))
+
+# For some reason loop files created by imager don't shrink properly when
+# running resize2fs -M on them. Hence manually growing the loop file here
+# to make the shrinking work once we have the image populated.
+dd if=/dev/zero bs=1 seek=1400000000 count=1 of=fimage.img
+/sbin/e2fsck -f -y fimage.img
+/sbin/resize2fs -f fimage.img
+
+pigz -7 root.img
+md5sum -b root.img.gz > root.img.gz.md5
+
+pigz -7 home.img
+md5sum -b home.img.gz > home.img.gz.md5
+
+mount -o loop fimage.img $FIMAGE_TEMP
+mkdir -p $FIMAGE_TEMP/${RELEASENAME}
+mv root.img.gz* $FIMAGE_TEMP/${RELEASENAME}
+mv home.img.gz* $FIMAGE_TEMP/${RELEASENAME}
+umount $FIMAGE_TEMP
+rmdir $FIMAGE_TEMP
+
+/sbin/e2fsck -f -y fimage.img
+/sbin/resize2fs -f -M fimage.img
+
+# To make the file magic right lets convert to single file sparse image.
+# 3456M size is selected so that we always will have only one file as output.
+/usr/bin/img2simg -C 3456M fimage.img
+rm fimage.img
+
 /sbin/losetup -d $LVM_LOOP
 
 mv temp.img sailfish.img
