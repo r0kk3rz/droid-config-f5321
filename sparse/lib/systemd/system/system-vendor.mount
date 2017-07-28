@@ -6,7 +6,7 @@ Before=local-fs.target systemd-modules-load.service
 What=/dev/mmcblk0p24
 Where=/system/vendor
 Type=ext4
-Options=ro,nosuid,nodev,barrier=1,data=ordered,nodelalloc,nomblk_io_submit,errors=panic
+Options=rw,nosuid,nodev,barrier=1,data=ordered,nodelalloc,nomblk_io_submit,errors=panic
 TimeoutSec=10
 
 [Install]
