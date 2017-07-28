@@ -1,3 +1,4 @@
 /boot/flash.sh
 /boot/extracting-README.txt
 /boot/flashing-README.txt
+/boot/make_ext4fs
