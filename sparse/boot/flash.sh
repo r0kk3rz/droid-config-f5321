@@ -53,6 +53,20 @@ if [ ! -f "$BLOBS" ]; then
   exit 1
 fi
 
+MAKE_EXT4FS=make_ext4fs
+
+if [ ! -f "$MAKE_EXT4FS" ]; then
+  echo "Please download the '$MAKE_EXT4FS' binary tool supplied by Jolla into this directory"
+  echo "or build one yourself:"
+  echo "git clone https://android.googlesource.com/platform/system/extras"
+  echo "cd extras/ext4_utils"
+  echo "git checkout 67bf7cb2c7487b2a93af8e2d9903842e8fe51f69 -b no-android-deps"
+  echo "gcc [^se]*.c sha1.c sparse_crc32.c ext4_utils.c extent.c -o $MAKE_EXT4FS -lz"
+  echo "cp $MAKE_EXT4FS $(pwd)"
+  echo "cd $(pwd)"
+  exit 1
+fi
+
 # Do not need root for fastboot on Mac OS X
 if [ "$(uname)" != "Darwin" -a $(id -u) -ne 0 ]; then
   exec sudo -E bash $0
@@ -179,7 +193,7 @@ rm -rf tmp
 mkdir tmp
 unzip $BLOBS -d tmp
 cp fw_bcmdhd.bin fw_bcmdhd_apsta.bin tmp/vendor/sony/loire-common/proprietary/vendor/firmware
-./make_ext4fs -l 230M oem.img tmp/vendor/sony/loire-common/proprietary/vendor
+./$MAKE_EXT4FS -l 230M oem.img tmp/vendor/sony/loire-common/proprietary/vendor
 rm -rf tmp
 $FLASHCMD cache oem.img
 
