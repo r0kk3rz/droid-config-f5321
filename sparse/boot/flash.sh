@@ -43,6 +43,15 @@ function check_fastboot {
   return 1
 }
 
+BLOBS=SW_binaries_for_Xperia_AOSP_M_MR1_3.10_v11_loire.zip
+
+if [ ! -f "$BLOBS" ]; then
+  echo "Please download Sony Xperia X Software binaries for AOSP Marshmallow (Android 6.0.1) from"
+  echo "https://developer.sonymobile.com/downloads/tool/software-binaries-for-aosp-marshmallow-6-0-1-loire/"
+  echo "(sha256sum: a1a881885475d3dcb4cb3861a630c906d9568d896008a86e6249cef1b23a2650)"
+  echo "and place the file in this directory ($(pwd))"
+  exit 1
+fi
 
 # Do not need root for fastboot on Mac OS X
 if [ "$(uname)" != "Darwin" -a $(id -u) -ne 0 ]; then
@@ -165,6 +174,14 @@ done
 for x in sailfish.img0*; do
   $FLASHCMD userdata $x
 done
+
+rm -rf tmp
+mkdir tmp
+unzip $BLOBS -d tmp
+cp fw_bcmdhd.bin fw_bcmdhd_apsta.bin tmp/vendor/sony/loire-common/proprietary/vendor/firmware
+./make_ext4fs -l 230M oem.img tmp/vendor/sony/loire-common/proprietary/vendor
+rm -rf tmp
+$FLASHCMD cache oem.img
 
 echo "Flashing completed. Detach usb cable, press and hold the powerkey to reboot."
 
