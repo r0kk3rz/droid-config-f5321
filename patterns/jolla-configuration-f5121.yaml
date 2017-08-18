@@ -15,6 +15,7 @@ Requires:
 - sd-utils
 - geoclue-provider-mlsdb
 - jolla-settings-system-flashlight
+- apkd-config-home
 
 Summary: Jolla Configuration f5121
 
