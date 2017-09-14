@@ -43,12 +43,11 @@ function check_fastboot {
   return 1
 }
 
-BLOBS=SW_binaries_for_Xperia_AOSP_M_MR1_3.10_v11_loire.zip
+BLOBS=$(ls -1 SW_binaries_for_Xperia_AOSP_*_loire.zip | tail -n1)
 
 if [ ! -f "$BLOBS" ]; then
   echo "Please download Sony Xperia X Software binaries for AOSP Marshmallow (Android 6.0.1) from"
   echo "https://developer.sonymobile.com/downloads/tool/software-binaries-for-aosp-marshmallow-6-0-1-loire/"
-  echo "(sha256sum: a1a881885475d3dcb4cb3861a630c906d9568d896008a86e6249cef1b23a2650)"
   echo "and place the file in this directory ($(pwd))"
   exit 1
 fi
