@@ -1,10 +1,10 @@
 # Feel free to disable non-critical HA parts during devel by commenting lines out
 # Generated in hadk by executing: rpm/dhd/helpers/add_new_device.sh
 
-Description: Pattern with packages for f5121 configurations
-Name: jolla-configuration-f5121
+Description: Pattern with packages for f5321 configurations
+Name: jolla-configuration-f5321
 Requires:
-- pattern:jolla-hw-adaptation-f5121
+- pattern:jolla-hw-adaptation-f5321
 
 - patterns-sailfish-applications
 - patterns-sailfish-ui
@@ -17,5 +17,5 @@ Requires:
 - jolla-settings-system-flashlight
 - apkd-config-home
 
-Summary: Jolla Configuration f5121
+Summary: Jolla Configuration f5321
 

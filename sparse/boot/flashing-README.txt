@@ -1,7 +1,7 @@
 
 = PRE STEPS FOR FLASHING ON TOP OF THE ANDROID BUILD =
 
-If SONY Xperia X is running Android you need to unlock bootloader before you can
+If SONY Xperia X Compact is running Android you need to unlock bootloader before you can
 flash Sailfish OS with these instructions. SONY has provided own instructions how
 to unlock bootloader. You can follow instructions from here:
 
@@ -40,7 +40,7 @@ Next:
 
 NOTE: If flashing does not succeed, you might have missing fastboot binary or
 it is too old. Many distros include andoid-tools package, but that might not
-be new enough to support Xperia X flashing.
+be new enough to support Xperia X Compact flashing.
 
 Installation commands for some linux distributions:
 * Ubuntu: sudo apt-get install android-tools-fastboot
