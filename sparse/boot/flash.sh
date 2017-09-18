@@ -191,7 +191,10 @@ done
 rm -rf tmp
 mkdir tmp
 unzip $BLOBS -d tmp
-cp fw_bcmdhd.bin fw_bcmdhd_apsta.bin tmp/vendor/sony/loire-common/proprietary/vendor/firmware
+
+if [ -f "fw_bcmdhd.bin" ]; then
+  cp fw_bcmdhd.bin fw_bcmdhd_apsta.bin tmp/vendor/sony/loire-common/proprietary/vendor/firmware
+fi
 chmod +x tmp/vendor/sony/loire-common/proprietary/vendor/bin/*
 chmod +x ./$MAKE_EXT4FS
 ./$MAKE_EXT4FS -l 230M oem.img tmp/vendor/sony/loire-common/proprietary/vendor
