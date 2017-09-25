@@ -23,6 +23,9 @@ Requires:
 # Keeping everything in detritus for now before splitting
 - libhybris-detritus
 
+# Bluetooth
+- bluetooth-rfkill-event-hciattach
+
 # Sensors
 - hybris-libsensorfw-qt5
 
