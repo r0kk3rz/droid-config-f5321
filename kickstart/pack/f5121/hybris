@@ -105,7 +105,7 @@ rm sailfish.img
 
 chmod 755 flash.*
 
-FILES="flash* *.img* *.bin"
+FILES="flash* *.img* *.bin *.exe *.dll *.inf"
 FILES_TO_COPY="*.urls"
 
 mkdir -p ${RELEASENAME}
