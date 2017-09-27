@@ -5,6 +5,7 @@
 
 set tmpflashfile=tmpfile.txt
 set emmawebsite=https://developer.sonymobile.com/open-devices/flash-tool/how-to-download-and-install-the-flash-tool/
+set unlockwebsite=https://developer.sonymobile.com/unlockbootloader/
 
 echo(
 echo Power on the device in fastboot mode, by doing following.
@@ -27,7 +28,7 @@ echo Searching device with vendor id '%vendorid%'..
 :: F5321 - Xperia X Compact
 @call :getvar product
 findstr /R /C:"product: F5[13]2[12]" %tmpflashfile% >NUL 2>NUL
-if not errorlevel 1 GOTO no_error
+if not errorlevel 1 GOTO no_error_product
 
 echo(
 echo The DEVICE this flashing script is meant for WAS NOT FOUND!
@@ -38,7 +39,22 @@ echo(
 pause
 exit /b 1
 
-:no_error
+:no_error_product
+
+:: Check that device has been unlocked
+@call :getvar secure
+findstr /R /C:"secure: no" %tmpflashfile% >NUL 2>NUL
+if not errorlevel 1 GOTO no_error_unlock
+echo(
+echo This device has not been unlocked for the flashing.
+echo Please go to %unlockwebsite% and see instructions how to unlock your device.
+echo Press enter to open browser with the webpage.
+echo(
+pause
+start "" %unlockwebsite%
+exit /b 1
+
+:no_error_unlock
 
 :: Verify that the sony release on the phone is new enough.
 @call :getvar version-baseband
