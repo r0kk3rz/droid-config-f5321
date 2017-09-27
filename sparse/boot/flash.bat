@@ -97,7 +97,8 @@ taskkill /im fastboot.exe /f >NUL 2>NUL
 :: Before flashing calculate md5sum to ensure file is not corrupted, so for each line in md5.lst do
 @for /f %%i in ('findstr %~1 md5.lst') do @set md5sumold=%%i
 :: We want to take the second line of output from CertUtil, if you know better way let me know :)
-@for /f "skip=1 tokens=1" %%i in ('CertUtil -hashfile %~1 MD5') do @set md5sumnew=%%i && goto :file_break
+:: delims= is needed for this to work on windows 8
+@for /f "skip=1 tokens=1 delims=" %%i in ('CertUtil -hashfile %~1 MD5') do @set md5sumnew=%%i && goto :file_break
 :file_break
 :: Drop all spaces from the md5sumnew as the format provided by CertUtil is two chars space two chars..
 @set md5sumnew=%md5sumnew: =%
@@ -105,7 +106,7 @@ taskkill /im fastboot.exe /f >NUL 2>NUL
 @set "md5sumold=%md5sumold: ="&rem %
 @IF NOT "%md5sumnew%" == "%md5sumold%" (
   @echo(
-  @echo MD5SUM of file %~1 does not match to md5.lst.
+  @echo MD5SUM '%md5sumnew%' of file %~1 does not match to md5.lst '%md5sumold%'.
   @call :exitflashfail
 )
 @echo MD5SUM '%md5sumnew%' match for %~1.
@@ -119,17 +120,17 @@ taskkill /im fastboot.exe /f >NUL 2>NUL
 )
 %fastbootcmd% %*
 @IF "%ERRORLEVEL%" == "1" (
-  @echo (
+  @echo(
   @echo ERROR: Failed to execute '%fastbootcmd% %*'.
   @call :exitflashfail
 )
 @exit /b 0
 
 :exitflashfail
-@echo (
+@echo(
 @echo FLASHING FAILED!
 @echo Please contact party who provided this image to you.
-pause
+@pause
 @exit 1
 @exit /b 0
 
