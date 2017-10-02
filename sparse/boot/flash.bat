@@ -6,6 +6,7 @@
 set tmpflashfile=tmpfile.txt
 set emmawebsite=https://developer.sonymobile.com/open-devices/flash-tool/how-to-download-and-install-the-flash-tool/
 set unlockwebsite=https://developer.sonymobile.com/unlockbootloader/
+set oemblobwebsite=https://developer.sonymobile.com/open-devices/list-of-devices-and-resources/
 
 echo(
 echo Power on the device in fastboot mode, by doing following.
@@ -76,6 +77,33 @@ exit /b 1
 )
 
 del %tmpflashfile% >NUL 2>NUL
+setlocal EnableDelayedExpansion
+
+:: Find the blob image. Make sure there's only one.
+for /r %%f in (vendor_loire_*.img) do (
+if not defined blobfilename (
+set blobfilename=%%f
+) else (
+echo(
+echo More than one Sony Vendor image was found. Please remove
+echo any additional files.
+echo(
+exit /b 1
+)
+)
+
+:: Bail out if we don't have a blob image
+if not defined blobfilename (
+echo(
+echo The Sony Vendor partition image was not found in the current
+echo directory. Please download it from %oemblobwebsite% and unzip
+echo it into this directory.
+echo Press enter to open the browser with the webpage.
+echo(
+pause
+start "" %oemblobwebsite%
+exit /b 1
+)
 
 :: We want to print the fastboot commands so user can see what actually
 :: happens when flashing is done.
@@ -84,6 +112,7 @@ del %tmpflashfile% >NUL 2>NUL
 @call :fastboot flash boot hybris-boot.img
 @call :fastboot flash system fimage.img001
 @call :fastboot flash userdata sailfish.img001
+@call :fastboot flash oem %blobfilename%
 
 :: NOTE: Do not reboot here as the battery might not be in the device
 :: and in such situation we should not reboot the device.
