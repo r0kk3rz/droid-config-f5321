@@ -43,29 +43,6 @@ function check_fastboot {
   return 1
 }
 
-BLOBS=$(ls -1 SW_binaries_for_Xperia_AOSP_*_loire.zip | tail -n1)
-
-if [ ! -f "$BLOBS" ]; then
-  echo "Please download Sony Xperia X Software binaries for AOSP Marshmallow (Android 6.0.1) from"
-  echo "https://developer.sonymobile.com/downloads/tool/software-binaries-for-aosp-marshmallow-6-0-1-loire/"
-  echo "and place the file in this directory ($(pwd))"
-  exit 1
-fi
-
-MAKE_EXT4FS=make_ext4fs
-
-if [ ! -f "$MAKE_EXT4FS" ]; then
-  echo "Please download the '$MAKE_EXT4FS' binary tool supplied by Jolla into this directory"
-  echo "or build one yourself:"
-  echo "git clone https://android.googlesource.com/platform/system/extras"
-  echo "cd extras/ext4_utils"
-  echo "git checkout 67bf7cb2c7487b2a93af8e2d9903842e8fe51f69 -b no-android-deps"
-  echo "gcc [^se]*.c sha1.c sparse_crc32.c ext4_utils.c extent.c -o $MAKE_EXT4FS -lz"
-  echo "cp $MAKE_EXT4FS $(pwd)"
-  echo "cd $(pwd)"
-  exit 1
-fi
-
 # Do not need root for fastboot on Mac OS X
 if [ "$(uname)" != "Darwin" -a $(id -u) -ne 0 ]; then
   exec sudo -E bash $0
@@ -150,7 +127,32 @@ FASTBOOTCMD="${FASTBOOT_BIN_PATH}${FASTBOOT_BIN_NAME} -i 0x$VENDORIDFOUND $FASTB
 
 echo "Fastboot command: $FASTBOOTCMD"
 
-FLASHCMD="$FASTBOOTCMD flash"
+PRODUCT="$($FASTBOOTCMD getvar product 2>&1 | head -n1 | cut -d ' ' -f2)"
+
+if [ -z "$(echo $PRODUCT | grep -e "F5[13]2[12]")" ]; then
+  echo; echo "This script is not meant for device $PRODUCT."
+  echo Please connect right device and try again.
+  echo;
+  exit 1;
+fi
+
+if [ "$($FASTBOOTCMD getvar secure 2>&1 | head -n1 | cut -d ' ' -f2 )" == "yes" ]; then
+  echo; echo "This device has not been unlocked and you need for flashing."
+  echo "Please go to https://developer.sonymobile.com/unlockbootloader/ and see instructions how to unlock your device."
+  echo;
+  exit 1;
+fi
+
+VERSION=$($FASTBOOTCMD getvar version-baseband 2>&1 | head -n1 | cut -d ' ' -f2 | cut -d '_' -f2 | cut -d '.' -f1,2)
+
+VERCOMP=$(echo "$VERSION >= 34.3" | bc -l)
+
+if [ "$VERCOMP" == "0" ]; then
+  echo; echo "You have too old Sony Android version ($VERSION) on your device,"
+  echo "Please go to https://developer.sonymobile.com/open-devices/flash-tool/how-to-download-and-install-the-flash-tool/ and update your device."
+  echo;
+  exit 1;
+fi
 
 if [ -z ${BINARY_PATH} ]; then
   BINARY_PATH=./
@@ -163,6 +165,14 @@ fi
 IMAGES=(
 "boot ${SAILFISH_IMAGE_PATH}hybris-boot.img"
 )
+
+if [ "$(md5sum -c md5.lst --status;echo $?)" -eq "1" ]; then
+  echo; echo "md5sum does not match, please download the package again."
+  echo;
+  exit 1;
+fi
+
+FLASHCMD="$FASTBOOTCMD flash"
 
 for IMAGE in "${IMAGES[@]}"; do
   read partition ifile <<< $IMAGE
@@ -187,19 +197,6 @@ done
 for x in sailfish.img0*; do
   $FLASHCMD userdata $x
 done
-
-rm -rf tmp
-mkdir tmp
-unzip $BLOBS -d tmp
-
-if [ -f "fw_bcmdhd.bin" ]; then
-  cp fw_bcmdhd.bin fw_bcmdhd_apsta.bin tmp/vendor/sony/loire-common/proprietary/vendor/firmware
-fi
-chmod +x tmp/vendor/sony/loire-common/proprietary/vendor/bin/*
-chmod +x ./$MAKE_EXT4FS
-./$MAKE_EXT4FS -l 230M oem.img tmp/vendor/sony/loire-common/proprietary/vendor
-rm -rf tmp
-$FLASHCMD cache oem.img
 
 echo "Flashing completed. Detach usb cable, press and hold the powerkey to reboot."
 
