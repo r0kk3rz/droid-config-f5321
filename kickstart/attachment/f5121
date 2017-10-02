@@ -1,4 +1,5 @@
 /boot/hybris-boot.img
+/boot/hybris-recovery.img
 droid-config-f5121-out-of-image-files
 droid-flashing-tools
 /etc/hw-release
