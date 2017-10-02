@@ -37,7 +37,9 @@ LVM_LOOP=$(/sbin/losetup -f)
 ROOT_LOOP=$(/sbin/losetup -f)
 /sbin/losetup $ROOT_LOOP root.img
 /sbin/e2fsck -f -y $ROOT_LOOP
-BLOCKS=$(/sbin/resize2fs -M $ROOT_LOOP | /bin/grep "The filesystem on" | /bin/cut -d ' ' -f 7)
+# The "on is al ready" sed hack is added to handle cases when resize2fs
+# outputs "The filesystem is already X blocks long" to stderr:
+BLOCKS=$(/sbin/resize2fs -M $ROOT_LOOP 2>&1 | tail -n 2 | sed "s/is already/on is al ready/" | /bin/grep "The filesystem on" | /bin/cut -d ' ' -f 7)
 echo We got ourselves root blocks _ $BLOCKS _
 SIZE=$(/usr/bin/expr $BLOCKS \* 4096)
 echo after maths size _ $SIZE _
@@ -50,7 +52,9 @@ dd if=root.img bs=4096 count=$BLOCKS of=/dev/sailfish/root
 HOME_LOOP=$(/sbin/losetup -f)
 /sbin/losetup $HOME_LOOP home.img
 /sbin/e2fsck -f -y $HOME_LOOP
-BLOCKS=$(/sbin/resize2fs -M $HOME_LOOP | /bin/grep "The filesystem on" | /bin/cut -d ' ' -f 7)
+# The "on is al ready" sed hack is added to handle cases when resize2fs
+# outputs "The filesystem is already X blocks long" to stderr:
+BLOCKS=$(/sbin/resize2fs -M $HOME_LOOP 2>&1 | tail -n 2 | sed "s/is already/on is al ready/" | /bin/grep "The filesystem on" | /bin/cut -d ' ' -f 7)
 echo We got ourselves home size _ $BLOCKS _
 SIZE=$(/usr/bin/expr $BLOCKS \* 4096)
 
