@@ -6,6 +6,7 @@ Name: jolla-hw-adaptation-f5321
 Requires:
 - droid-hal-f5321
 - droid-hal-f5321-img-boot
+- droid-hal-f5321-img-recovery
 - droid-config-f5321-sailfish
 - droid-config-f5321-pulseaudio-settings
 - droid-config-f5321-policy-settings
