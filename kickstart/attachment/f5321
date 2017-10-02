@@ -2,5 +2,3 @@
 droid-config-f5321-out-of-image-files
 droid-flashing-tools
 /etc/hw-release
-/system/vendor/firmware/fw_bcmdhd.bin
-/system/vendor/firmware/fw_bcmdhd_apsta.bin
