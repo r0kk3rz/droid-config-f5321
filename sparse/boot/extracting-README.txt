@@ -8,7 +8,8 @@ Step2: Extract the image
 
 = WINDOWS 7/8/10 =
 
-Right click the downloaded file and select Extract.
+Right click the downloaded file and select "Extract All..." then select directory
+where you want to extract the content and click Extract.
 
 = Linux =
 

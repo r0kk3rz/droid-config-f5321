@@ -40,6 +40,7 @@ Next:
 * Next start the flashing script by double clicking the flash.bat file
   NOTE: Windows by default hides the .bat file so it might be shown just as flash file in 
         File explorer.
+  NOTE: If you see notification "Windows protected your PC", click "More info" and then "Run anyway"
 
 
 == LINUX ==
