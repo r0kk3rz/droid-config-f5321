@@ -67,7 +67,7 @@ exit /b 1
 for /f "tokens=2 delims=_" %%i in ('type %tmpflashfile%') do @set version1=%%i
 for /f "tokens=1-2 delims=." %%a in ('echo %version1%') do @set version2=%%a.%%b
 
-:: We only support devices that have been flashed at least with version 34.0 of the Sony Android delivery
+:: We only support devices that have been flashed at least with version 34.3 of the Sony Android delivery
 if %version2% LSS 34.3 (
 echo(
 echo The Sony Android version on your device is too old,
