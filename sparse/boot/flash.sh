@@ -131,13 +131,13 @@ PRODUCT="$($FASTBOOTCMD getvar product 2>&1 | head -n1 | cut -d ' ' -f2)"
 
 if [ -z "$(echo $PRODUCT | grep -e "F5[13]2[12]")" ]; then
   echo; echo "This script is not meant for device $PRODUCT."
-  echo Please connect right device and try again.
+  echo Please connect the right device and try again.
   echo;
   exit 1;
 fi
 
 if [ "$($FASTBOOTCMD getvar secure 2>&1 | head -n1 | cut -d ' ' -f2 )" == "yes" ]; then
-  echo; echo "This device has not been unlocked and you need for flashing."
+  echo; echo "This device has not been unlocked, but you need that for flashing."
   echo "Please go to https://developer.sonymobile.com/unlockbootloader/ and see instructions how to unlock your device."
   echo;
   exit 1;

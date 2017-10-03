@@ -1,5 +1,5 @@
 [Unit]
-Description=Mount SW binaries that have been flashed to the cache partition
+Description=Mount SW binaries that have been flashed to the oem partition
 Before=local-fs.target systemd-modules-load.service
 
 [Mount]
