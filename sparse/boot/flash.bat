@@ -9,10 +9,13 @@ set unlockwebsite=https://developer.sonymobile.com/unlockbootloader/
 set oemblobwebsite=https://developer.sonymobile.com/open-devices/list-of-devices-and-resources/
 
 echo(
-echo Power on the device in fastboot mode, by doing following.
-echo 1. Turn off the device.
-echo 2. Hold volume up button while plugging in the USB cable to your PC
-echo 3. After this you should see blue LED
+echo This is a Windows flashing script for Sony Xperia X device.
+echo(
+echo Power on the device in fastboot mode, by doing the following:
+echo 1. Turn off your Xperia.
+echo 2. Connect one end of a USB cable to your PC.
+echo 3. While holding the volume up button pressed, connect the other end of the USB cable to your Xperia.
+echo 4. After this you should see the blue LED lit on Xperia, and it will be ready for flashing
 echo(
 pause
 call :sleep 3
@@ -34,7 +37,7 @@ if not errorlevel 1 GOTO no_error_product
 echo(
 echo The DEVICE this flashing script is meant for WAS NOT FOUND!
 echo You might be missing the required drivers for your phone.
-echo Go to Device Manager and update the fastboot driver from provided
+echo Go to Device Manager and update the fastboot driver from the provided
 echo android_winusb.inf file.
 echo(
 pause
@@ -57,17 +60,17 @@ exit /b 1
 
 :no_error_unlock
 
-:: Verify that the sony release on the phone is new enough.
+:: Verify that the Sony release on the phone is new enough.
 @call :getvar version-baseband
 
 :: Take from 1300-4911_34.0.A.2.292 the first number set, e.g., 34.0
 for /f "tokens=2 delims=_" %%i in ('type %tmpflashfile%') do @set version1=%%i
 for /f "tokens=1-2 delims=." %%a in ('echo %version1%') do @set version2=%%a.%%b
 
-:: We only support devices that have been flashed at least with version 34.0 of the Sony AOSP delivery
+:: We only support devices that have been flashed at least with version 34.0 of the Sony Android delivery
 if %version2% LSS 34.3 (
 echo(
-echo You have too old Sony AOSP version on your device, 
+echo The Sony Android version on your device is too old,
 echo please go to %emmawebsite% and update your device.
 echo Press enter to open the browser with the webpage.
 echo(
