@@ -143,12 +143,10 @@ if [ "$($FASTBOOTCMD getvar secure 2>&1 | head -n1 | cut -d ' ' -f2 )" == "yes" 
   exit 1;
 fi
 
-VERSION=$($FASTBOOTCMD getvar version-baseband 2>&1 | head -n1 | cut -d ' ' -f2 | cut -d '_' -f2 | cut -d '.' -f1,2)
+read -r VMAJOR VMINOR<<<$($FASTBOOTCMD getvar version-baseband 2>&1 | head -n1 | cut -d ' ' -f2 | cut -d '_' -f2 | cut -d '.' -f1,2 | tr . ' ')
 
-VERCOMP=$(echo "$VERSION >= 34.3" | bc -l)
-
-if [ "$VERCOMP" == "0" ]; then
-  echo; echo "You have too old Sony Android version ($VERSION) on your device,"
+if (( $VMAJOR < 34 || $VMAJOR == 34 && $VMINOR < 3 )); then
+  echo; echo "You have too old Sony Android version ($VMAJOR.$VMINOR) on your device,"
   echo "Please go to https://developer.sonymobile.com/open-devices/flash-tool/how-to-download-and-install-the-flash-tool/ and update your device."
   echo;
   exit 1;
