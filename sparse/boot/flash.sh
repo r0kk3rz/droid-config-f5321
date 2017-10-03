@@ -180,6 +180,25 @@ for IMAGE in "${IMAGES[@]}"; do
   fi
 done
 
+BLOBS=""
+for b in $(ls -1 vendor_loire_*.img 2>/dev/null); do
+  if [ -n "$BLOBS" ]; then
+   echo; echo "More than one Sony Vendor image was found. Please remove any additional files."
+   echo
+   exit 1
+  fi
+  BLOBS=$b
+done
+
+if [ -z $BLOBS ]; then
+  echo; echo The Sony Vendor partition image was not found in the current directory. Please
+  echo download it from
+  echo https://developer.sonymobile.com/open-devices/list-of-devices-and-resources/
+  echo and unzip it into this directory.
+  echo
+  exit 1
+fi
+
 for IMAGE in "${IMAGES[@]}"; do
   read partition ifile <<< $IMAGE
   echo "Flashing $partition partition.."
@@ -195,6 +214,9 @@ done
 for x in sailfish.img0*; do
   $FLASHCMD userdata $x
 done
+
+echo "Flashing oem partition.."
+$FLASHCMD oem $BLOBS
 
 echo "Flashing completed. Detach usb cable, press and hold the powerkey to reboot."
 
