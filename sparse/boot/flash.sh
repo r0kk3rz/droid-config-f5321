@@ -218,5 +218,8 @@ done
 echo "Flashing oem partition.."
 $FLASHCMD oem $BLOBS
 
-echo "Flashing completed. Detach usb cable, press and hold the powerkey to reboot."
-
+echo
+echo "Flashing completed."
+echo
+echo "Remove the USB cable and bootup the device by pressing powerkey."
+echo
