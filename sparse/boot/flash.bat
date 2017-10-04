@@ -14,8 +14,10 @@ echo(
 echo Power on the device in fastboot mode, by doing the following:
 echo 1. Turn off your Xperia.
 echo 2. Connect one end of a USB cable to your PC.
-echo 3. While holding the volume up button pressed, connect the other end of the USB cable to your Xperia.
-echo 4. After this you should see the blue LED lit on Xperia, and it will be ready for flashing
+echo 3. While holding the volume up button pressed, connect the other end of
+echo    the USB cable to your Xperia.
+echo 4. After this you should see the blue LED lit on Xperia, and it will be
+echo    ready for flashing
 echo(
 pause
 call :sleep 3
@@ -24,7 +26,7 @@ call :sleep 3
 set vendorid=0x0fce
 set fastbootcmd=fastboot.exe -i %vendorid%
 
-echo Searching device with vendor id '%vendorid%'..
+echo Searching a device with vendor id '%vendorid%'..
 
 :: Ensure that we are flashing right device
 :: F5121 - Xperia X
@@ -36,9 +38,9 @@ if not errorlevel 1 GOTO no_error_product
 
 echo(
 echo The DEVICE this flashing script is meant for WAS NOT FOUND!
-echo You might be missing the required drivers for your phone.
-echo Go to Device Manager and update the fastboot driver from the provided
-echo android_winusb.inf file.
+echo You might be missing the required windows fastboot drivers for your device.
+echo Go to the Windows Device Manager and update the fastboot driver for the
+echo device with the provided android_winusb.inf file in this directory.
 echo(
 pause
 exit /b 1
@@ -50,9 +52,10 @@ exit /b 1
 findstr /R /C:"secure: no" %tmpflashfile% >NUL 2>NUL
 if not errorlevel 1 GOTO no_error_unlock
 echo(
-echo This device has not been unlocked for the flashing.
-echo Please go to %unlockwebsite%
-echo and see instructions how to unlock your device.
+echo This device has not been unlocked for the flashing. Please follow the
+echo instructions how to unlock your device at the following webpage:
+echo %unlockwebsite%
+echo(
 echo Press enter to open browser with the webpage.
 echo(
 pause
@@ -71,8 +74,10 @@ for /f "tokens=1-2 delims=." %%a in ('echo %version1%') do @set version2=%%a.%%b
 :: We only support devices that have been flashed at least with version 34.3 of the Sony Android delivery
 if %version2% LSS 34.3 (
 echo(
-echo The Sony Android version on your device is too old,
-echo please go to %emmawebsite% and update your device.
+echo The Sony Android version on your device is too old, please update your
+echo device with instructions provided at the following webpage:
+echo %emmawebsite%
+echo(
 echo Press enter to open the browser with the webpage.
 echo(
 pause
@@ -91,8 +96,8 @@ if not defined blobfilename (
 set blobfilename=%%~nxf
 ) else (
 echo(
-echo More than one Sony Vendor image was found. Please remove
-echo any additional files.
+echo More than one Sony Vendor image was found in this directory.
+echo Please remove any additional files (vendor_loire_*.img).
 echo(
 exit /b 1
 )
@@ -101,9 +106,10 @@ exit /b 1
 :: Bail out if we don't have a blob image
 if not defined blobfilename (
 echo(
-echo The Sony Vendor partition image was not found in the current directory.
-echo Please download it from %oemblobwebsite%
+echo The Sony Vendor partition image was not found in the current
+echo directory. Please download it from %oemblobwebsite%
 echo and unzip it into this directory.
+echo(
 echo Press enter to open the browser with the webpage.
 echo(
 pause
@@ -123,8 +129,10 @@ exit /b 1
 :: NOTE: Do not reboot here as the battery might not be in the device
 :: and in such situation we should not reboot the device.
 @echo(
-@echo Flashing completed. 
+@echo Flashing completed.
+@echo(
 @echo Remove the USB cable and bootup the device by pressing powerkey.
+@echo(
 @pause
 
 @exit /b 0
@@ -185,7 +193,9 @@ taskkill /im fastboot.exe /f >NUL 2>NUL
 :exitflashfail
 @echo(
 @echo FLASHING FAILED!
-@echo Please contact party who provided this image to you.
+@echo(
+@echo Please go to https://together.jolla.com/ and ask for guidance.
+@echo(
 @pause
 @exit 1
 @exit /b 0
