@@ -131,24 +131,22 @@ PRODUCT="$($FASTBOOTCMD getvar product 2>&1 | head -n1 | cut -d ' ' -f2)"
 
 if [ -z "$(echo $PRODUCT | grep -e "F5[13]2[12]")" ]; then
   echo; echo "This script is not meant for device $PRODUCT."
-  echo Please connect right device and try again.
+  echo Please connect the right device and try again.
   echo;
   exit 1;
 fi
 
 if [ "$($FASTBOOTCMD getvar secure 2>&1 | head -n1 | cut -d ' ' -f2 )" == "yes" ]; then
-  echo; echo "This device has not been unlocked and you need for flashing."
+  echo; echo "This device has not been unlocked, but you need that for flashing."
   echo "Please go to https://developer.sonymobile.com/unlockbootloader/ and see instructions how to unlock your device."
   echo;
   exit 1;
 fi
 
-VERSION=$($FASTBOOTCMD getvar version-baseband 2>&1 | head -n1 | cut -d ' ' -f2 | cut -d '_' -f2 | cut -d '.' -f1,2)
+read -r VMAJOR VMINOR<<<$($FASTBOOTCMD getvar version-baseband 2>&1 | head -n1 | cut -d ' ' -f2 | cut -d '_' -f2 | cut -d '.' -f1,2 | tr . ' ')
 
-VERCOMP=$(echo "$VERSION >= 34.3" | bc -l)
-
-if [ "$VERCOMP" == "0" ]; then
-  echo; echo "You have too old Sony Android version ($VERSION) on your device,"
+if (( $VMAJOR < 34 || $VMAJOR == 34 && $VMINOR < 3 )); then
+  echo; echo "You have too old Sony Android version ($VMAJOR.$VMINOR) on your device,"
   echo "Please go to https://developer.sonymobile.com/open-devices/flash-tool/how-to-download-and-install-the-flash-tool/ and update your device."
   echo;
   exit 1;
@@ -182,6 +180,25 @@ for IMAGE in "${IMAGES[@]}"; do
   fi
 done
 
+BLOBS=""
+for b in $(ls -1 vendor_loire_*.img 2>/dev/null); do
+  if [ -n "$BLOBS" ]; then
+   echo; echo "More than one Sony Vendor image was found. Please remove any additional files."
+   echo
+   exit 1
+  fi
+  BLOBS=$b
+done
+
+if [ -z $BLOBS ]; then
+  echo; echo The Sony Vendor partition image was not found in the current directory. Please
+  echo download it from
+  echo https://developer.sonymobile.com/open-devices/list-of-devices-and-resources/
+  echo and unzip it into this directory.
+  echo
+  exit 1
+fi
+
 for IMAGE in "${IMAGES[@]}"; do
   read partition ifile <<< $IMAGE
   echo "Flashing $partition partition.."
@@ -197,6 +214,9 @@ done
 for x in sailfish.img0*; do
   $FLASHCMD userdata $x
 done
+
+echo "Flashing oem partition.."
+$FLASHCMD oem $BLOBS
 
 echo "Flashing completed. Detach usb cable, press and hold the powerkey to reboot."
 
