@@ -51,7 +51,8 @@ findstr /R /C:"secure: no" %tmpflashfile% >NUL 2>NUL
 if not errorlevel 1 GOTO no_error_unlock
 echo(
 echo This device has not been unlocked for the flashing.
-echo Please go to %unlockwebsite% and see instructions how to unlock your device.
+echo Please go to %unlockwebsite%
+echo and see instructions how to unlock your device.
 echo Press enter to open browser with the webpage.
 echo(
 pause
@@ -85,7 +86,9 @@ setlocal EnableDelayedExpansion
 :: Find the blob image. Make sure there's only one.
 for /r %%f in (vendor_loire_*.img) do (
 if not defined blobfilename (
-set blobfilename=%%f
+:: Take only the filename and strip out the path which otherwise is there.
+:: This is to make sure that we do not face issues later with e.g. spaces in the path etc.
+set blobfilename=%%~nxf
 ) else (
 echo(
 echo More than one Sony Vendor image was found. Please remove
@@ -98,9 +101,9 @@ exit /b 1
 :: Bail out if we don't have a blob image
 if not defined blobfilename (
 echo(
-echo The Sony Vendor partition image was not found in the current
-echo directory. Please download it from %oemblobwebsite% and unzip
-echo it into this directory.
+echo The Sony Vendor partition image was not found in the current directory.
+echo Please download it from %oemblobwebsite%
+echo and unzip it into this directory.
 echo Press enter to open the browser with the webpage.
 echo(
 pause
@@ -120,7 +123,8 @@ exit /b 1
 :: NOTE: Do not reboot here as the battery might not be in the device
 :: and in such situation we should not reboot the device.
 @echo(
-@echo Flashing completed. Remove the USB cable and bootup the device by pressing powerkey.
+@echo Flashing completed. 
+@echo Remove the USB cable and bootup the device by pressing powerkey.
 @pause
 
 @exit /b 0
@@ -142,11 +146,14 @@ taskkill /im fastboot.exe /f >NUL 2>NUL
 @exit /b 0
 
 :md5sum
+@set md5sumold=
 :: Before flashing calculate md5sum to ensure file is not corrupted, so for each line in md5.lst do
 @for /f %%i in ('findstr %~1 md5.lst') do @set md5sumold=%%i
+:: Some files e.g. oem partition image is not part of md5.lst so skip checking md5sum for that file
+@if [%md5sumold%] == [] goto :skip_md5sum
 :: We want to take the second line of output from CertUtil, if you know better way let me know :)
 :: delims= is needed for this to work on windows 8
-@for /f "skip=1 tokens=1 delims=" %%i in ('CertUtil -hashfile %~1 MD5') do @set md5sumnew=%%i && goto :file_break
+@for /f "skip=1 tokens=1 delims=" %%i in ('CertUtil -hashfile "%~1" MD5') do @set md5sumnew=%%i && goto :file_break
 :file_break
 :: Drop all spaces from the md5sumnew as the format provided by CertUtil is two chars space two chars..
 @set md5sumnew=%md5sumnew: =%
@@ -158,6 +165,7 @@ taskkill /im fastboot.exe /f >NUL 2>NUL
   @call :exitflashfail
 )
 @echo MD5SUM '%md5sumnew%' match for %~1.
+:skip_md5sum
 @exit /b 0
 
 :: Function to call fastboot command with error checking
