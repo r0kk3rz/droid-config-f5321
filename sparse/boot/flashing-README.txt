@@ -1,88 +1,206 @@
+= SAILFISH X FOR SONY XPERIA™ X FLASHING GUIDE =
 
-= PRE STEPS FOR FLASHING ON TOP OF THE ANDROID BUILD =
+= FOR LINUX, WINDOWS AND OS X =
 
-If your SONY Xperia X is running Android you need to unlock bootloader before you can
-flash Sailfish OS to it. SONY has provided own instructions how
-to unlock bootloader. Please follow those instructions in here:
+Note: If you are a Linux or OS X user, your device's Android version is lower 
+than 34.3.A.0.228 and you have already unlocked your device's bootloader, then 
+you will need to use Windows for one step of the flashing procedure.
 
-https://developer.sonymobile.com/unlockbootloader/unlock-yourboot-loader/
+= STEP 1: GETTING AN Xperia™ X =
 
-It is best to first update the Android delivery on your Xperia device. For this you
-need to download the Emma tool from Sony's website and follow instructions given
-on that website.
+Get an Xperia™ X, model number F5121. To be able to replace the Sony Android
+system with Sailfish X, you will need to be able to unlock the bootloader of 
+your device so that it can be flashed with a new operating system. This process
+is supported by Sony as part of their Open Devices programme:
+
+https://developer.sonymobile.com/open-devices/
+ 
+The best way to get an unlockable device is to buy is a brand new Xperia™ X in 
+a sales box. If you are tempted to buy second-hand please be aware that there 
+are some variants for which the bootloader cannot be unlocked: for example 
+devices that have at some point been SIM locked, even if they have subsequently
+been SIM unlocked. It will not be possible to flash Sailfish X onto these 
+devices. Instructions for checking the unlockability of Xperia™ models can be
+found on the Sony Developer World website here: 
+
+https://developer.sonymobile.com/unlockbootloader/
+
+If in doubt, ask the vendor to check this before you buy.
+
+Once you receive your device you will need to boot it into Android at least
+once to update it to the latest Android version.
+If you have a new device that's still under warranty, it's a good idea to
+verify that all components of the device are working at this point, such as the
+cameras and radio devices, as exchanging your device under warranty may become
+more difficult once the bootloader has been unlocked.
+
+= STEP 2: UPDATING TO THE LATEST ANDROID SOFTWARE VERSION =
+
+You need to make sure your Xperia™ is running the latest version of Sony's
+Android, as a recent change was made to allow the installation of Sailfish X. If
+your device still has its bootloader locked, then you should be able to update
+to the latest version of Sony's Android using the built-in Over-The-Air (OTA) 
+update mechanism. To get to the latest version you might need to perform several
+upgrades. 
+
+Once your device has been updated to at least version 34.3.A.0.228 (check in
+Settings | About phone | Build number), then you can skip the later section
+concerning upgrading with the Sony Emma tool for Windows. If you've already 
+unlocked your device then don't worry - you can still upgrade your device with
+that tool.
+
+= STEP 3: UNLOCKING THE BOOTLOADER =
+
+Make sure that the system language of your Xperia™ device is set to English 
+before you continue.
+
+Go to https://developer.sonymobile.com/unlockbootloader/ website and select the
+model of your device Xperia™ X. You should see additional instructions to
+prepare your device for unlocking:
+
+* Enter your e-mail address, accept the terms and conditions, then submit 
+  the form. You will receive an email from Sony giving you a link to click in 
+  order to access the next stage. NOTE: If you have not received an e-mail 
+  within a few minutes, remember to check your spam folder. Gmail, for instance,
+  may automatically flag the Sony e-mail as spam.
+
+* Open the link in the received e-mail and enter the IMEI code of your device 
+  (18 digits). You can find your IMEI code printed on the retail box, or by 
+  typing *#06# into the Android Phone Dialer. If you have trouble with this, 
+  further instructions can be found on the Sony website.
+
+* Accept the terms & conditions to proceed. Please note the details of how this
+  process affects your Sony warranty.
+
+Now read and follow Sony's instructions on how to unlock the bootloader. Don't 
+miss the step to enable 'OEM unlock' from within Android beforehand.
+
+= LINUX AND OS X =
+
+Neither Linux nor OS X will require any additional drivers to connect to the 
+device in fastboot mode, but you will need to have installed the fastboot
+command itself: 
+
+* Debian/Ubuntu/.deb distros: apt-get install android-tools-fastboot
+* Fedora: yum install android-tools
+* OS X: brew install android-sdk
+
+= WINDOWS 7, 8 & 10 =
+
+On Windows, you shouldn't need to install the full Android Studio, as the 
+fastboot.exe tool you need is included in the Sailfish X archive. You will 
+however need to download and install the special fastboot drivers -
+you'll find a link to them in the Sony instructions.
+
+When your device is connected:
+* Open the 'Device Manager': On Windows 7, right-click the 'Computer' icon on 
+  the desktop and choose 'Manage'. When the Computer Management application
+  appears, choose the 'Device Manager' in the tree. On Windows 8 & 10, Device
+  Manager can be found by right-clicking the Start button, or by pressing
+  Windows+X on the keyboard.
+* Find the 'S1Boot Fastboot' device in the tree. If it is not correctly 
+  installed, it will show a warning sign. Right-click it and choose 'Update 
+  drivers', then 'Browse my computer for driver software', and point it to the
+  fastboot drivers you downloaded from Sony. 
+* Do not remove the fastboot drivers from your system once your device has 
+  been unlocked. They'll be needed for the actual flashing process too!
+
+= STEP 4: UPDATING AN UNLOCKED DEVICE TO THE LATEST ANDROID SOFTWARE VERSION =
+
+This step should not be needed if you previously updated your device to Android
+version 34.3.A.0.228 or higher before you unlocked it. Once unlocked, it is no
+longer possible to update from Android, and you will need to use a Sony tool
+called 'Emma' to update. Unfortunately, this tool is only available on Windows.
+
+The required Android version unlocks a crucial driver partition for flashing. If
+you attempt to flash over an older version, this part will fail and Sailfish X
+will not be able to boot. In this situation, you should still be able to flash
+the correct Android version with Emma, and flash Sailfish X again.
+
+Updating with Emma:
+
+* Download and install the Emma tool from:
 
 https://developer.sonymobile.com/open-devices/flash-tool/how-to-download-and-install-the-flash-tool/
 
-NOTE: Currently Sony provides Emma tool just for Windows.
+NOTE: Sony provides the Emma tool for Windows only.
 
-The needed Android version is 34.3 or newer. Version string format: x-x_34.3.x.x.x
+* Connect your device to your computer with a USB cable, while holding the 
+  'Volume Down' button on the device (note that this is different from fastboot
+  mode for unlocking and flashing). The LED light next to the top speaker should
+  light up green, not blue.
 
+* Run the Emma tool and follow its instructions. If you have a choice of version
+  to install, make sure the one you choose is at least version 34.3.A.0.228. You
+  can use the 'Select service' box for this.
 
-= FLASHING =
+* NOTE: The download size can be as large as 2.5GB and take a long time to 
+  download - from a few mins to several hours depending on the speed of your
+  internet connection. So go and get some coffee in the meantime.
 
-By this point of time you should already have the .zip file that contains
-the image as this flashing instructions file that you are reading at the moment
-is inside that .zip file. As a general note the flashing can take a long
-time (>10 minutes).
+* After successfully updating Android, boot the device into Android at least 
+  once to complete the installation by pushing the Power button. Android will
+  ask you for lots of information on first boot. You can skip as much of that as 
+  possible as it will make no difference to Sailfish X. The device will reboot
+  itself at the end of this wizard. When it's finished, shut it down again to
+  proceed with Sailfish X installation.
 
-Before starting the flashing:
-* Disconnect your Xperia device from your PC
-* Turn off your Xperia device
+* Should the "service execution" fail after the download, please disconnect the
+  device, make sure it is turned off and then reconnect again in fastboot mode 
+  (by pressing the 'Volume Down' key whilst connecting the cable). "Preparing 
+  the service" should now start automatically.
+
+NOTE: After flashing your device with Emma, any existing operating system will
+have been wiped and it will boot up into Android, even if you had already 
+installed Sailfish X on it.
+
+= STEP 5: GETTING THE SONY VENDOR BINARY IMAGE =
+
+Some drivers and other binaries needed to operate the device cannot be 
+distributed as part of Sailfish X due to licensing restrictions. You must 
+download these yourself from Sony's website, after accepting their separate
+license agreement.
+
+For convenience, these components have already been packaged into their own
+partition image, ready to flash to your device. 
+
+The Sony binary image for the Xperia™ X can be found here:
+
+https://developer.sonymobile.com/downloads/software-binaries/software-binaries-for-aosp-marshmallow-android-6-0-1-kernel-3-10-loire/
+
+Make sure you download the file from this link, version 13 or higher, as older 
+versions may still be available that are not compatible with the Sailfish X
+flashing procedure. 
+The image will be compressed as a zip file. Once downloaded, extract the image 
+file from the zip and place it with the other Sailfish X files. It will be 
+detected and flashed to your device during flashing.
+
+= STEP 6 : FLASHING SAILFISH X TO YOUR XPERIA™ =
+
+Connect your device to your PC in Fastboot mode as follows:
+
+* Disconnect your Xperia™ device from your PC
+* Turn off the device. Leave it off for at least fifteen seconds.
 * Connect one end of a USB cable to your PC
-* While holding the volume up button pressed, connect the other end of the USB
-  cable to your Xperia device.
-* After this you should see the blue LED lit on the Xperia device, and it is
-  ready for flashing.
+* While holding the 'Volume Up' button, connect the other end of the USB cable 
+  to your Xperia™ device. The LED next to the speaker on the device should
+  light up blue.
+* On Windows, fastboot drivers are needed to properly detect the device, as was
+  needed for the unlocking process. If you need to install them, see the
+  instructions in Step 3 above.
+* Launch the correct flashing script for your platform:
+  * On Linux and OS X, use flash.sh
+  * On Windows 7, 8 & 10, double-click 'flash-on-windows.bat'. If Windows warns
+    you that it 'Protected your PC' by stopping the script from launching, click
+    'More Info' then 'Run anyway'.
+* Follow the instructions in the console window.
+* When flashing has finished, reboot your device into Sailfish X!
 
-After this follow the instructions given for your host PC operating system.
+Happy flashing :)
+  
+= TROUBLESHOOTING =
 
-
-== WINDOWS 7/8/10 ==
-
-NOTE: In order to flash in windows the device needs to be detected properly.
-This might take a while and after it is done there should be adb or fastboot device
-shown in Windows Device Manager.
-
-Open e.g. Windows Explorer and go to the folder where the image is extracted.
-
-Next start the flashing script by double clicking the flash.bat file
-
-NOTE: Windows by default hides the .bat file so it might be shown just as
-      flash file in e.g. Windows Explorer.
-
-NOTE: If you see notification "Windows protected your PC", click
-      "More info" and then "Run anyway"
-
-Follow the instructions on the screen while flashing script is running.
-
-After completing the flash.bat script you can enjoy your Sailfish OS on Xperia.
-
-== LINUX ==
-
-Open terminal application and go to the folder where the flashable image is
-extracted.
-
-Next:
-* Next start flashing script by entering following command:
-
-  bash ./flash.sh
-
-* Enter your password if requested to gain root access for flashing the device
-* Once flashing is completed you will see text: 
-
-  "Flashing completed. Detact usb cable, press and hold the powerkey to reboot."
-
-* After following the guidance from script device should boot up to new Sailfish OS
-
-NOTE: If flashing does not succeed, you might have missing fastboot binary or
-it is too old. Many distros include andoid-tools package, but that might not
-be new enough to support Xperia X flashing.
-
-Installation commands for some linux distributions:
-* Ubuntu: sudo apt-get install android-tools-fastboot
-* Fedora: sudo dnf install android-tools
-
-If you want to compile fastboot binary for your distro you can compile version
-5.1.1 release 38 or newer from:
-https://github.com/mer-qa/qa-droid-tools
-
+Q: My Xperia™ shows only Sony logo when it is booting up, what to do?
+A: You should reflash the device with the instructions above. Verify that you 
+   have the correct Vendor binary image from Sony.
+   

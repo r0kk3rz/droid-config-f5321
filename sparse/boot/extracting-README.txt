@@ -1,21 +1,24 @@
+= EXTRACTING SAILFISH X =
 
-Step1: Download the image
+= STEP 1: DOWNLOAD THE IMAGE
 
-The image name is usually in following format SailfishOS-FLAVOUR-VERSION-DEVICE.zip
+The image name is usually in following format:
+
+SailfishOS-FLAVOUR-VERSION-DEVICE.zip
+
 which you need to download.
 
-Step2: Extract the image
+= STEP 2: EXTRACT THE IMAGE =
 
-= WINDOWS 7/8/10 =
-
-Right click the downloaded file and select "Extract All..." then select directory
-where you want to extract the content and click Extract.
-
-= Linux =
+= LINUX =
 
 Following command line extracts the image to the current working directory (pwd):
 
 $ unzip SailfishOS-FLAVOUR-VERSION-DEVICE.zip
 
-Step3: Read the flashing-README.txt from the extracted directory for further instructions
+= WINDOWS 7/8/10 =
 
+Right click the downloaded file and select "Extract All..." then select the 
+directory where you want to extract the content and click Extract.
+
+Now follow the instructions in flashing-README.txt
