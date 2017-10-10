@@ -1,5 +1,4 @@
 /boot/flash.sh
-/boot/flash.bat
-/boot/android_winusb.inf
+/boot/flash-on-windows.bat
 /boot/extracting-README.txt
 /boot/flashing-README.txt
