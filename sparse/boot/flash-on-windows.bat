@@ -40,7 +40,7 @@ echo(
 echo The DEVICE this flashing script is meant for WAS NOT FOUND!
 echo You might be missing the required windows fastboot drivers for your device.
 echo Go to the Windows Device Manager and update the fastboot driver for the
-echo device with the provided android_winusb.inf file in this directory.
+echo device.
 echo(
 pause
 exit /b 1
