@@ -129,7 +129,7 @@ echo "Fastboot command: $FASTBOOTCMD"
 
 PRODUCT="$($FASTBOOTCMD getvar product 2>&1 | head -n1 | cut -d ' ' -f2)"
 
-if [ -z "$(echo $PRODUCT | grep -e "F5[13]2[12]")" ]; then
+if [ -z "$(echo $PRODUCT | grep -e "F512[12]")" ]; then
   echo; echo "This script is not meant for device $PRODUCT."
   echo Please connect the right device and try again.
   echo;
@@ -146,7 +146,7 @@ fi
 read -r VMAJOR VMINOR<<<$($FASTBOOTCMD getvar version-baseband 2>&1 | head -n1 | cut -d ' ' -f2 | cut -d '_' -f2 | cut -d '.' -f1,2 | tr . ' ')
 
 if (( $VMAJOR < 34 || $VMAJOR == 34 && $VMINOR < 3 )); then
-  echo; echo "You have too old Sony Android version ($VMAJOR.$VMINOR) on your device,"
+  echo; echo "Your Sony Android version ($VMAJOR.$VMINOR) on your device is too old,"
   echo "Please go to https://developer.sonymobile.com/open-devices/flash-tool/how-to-download-and-install-the-flash-tool/ and update your device."
   echo;
   exit 1;
@@ -181,7 +181,7 @@ for IMAGE in "${IMAGES[@]}"; do
 done
 
 BLOBS=""
-for b in $(ls -1 vendor_loire_*.img 2>/dev/null); do
+for b in $(ls -1 *_loire.img 2>/dev/null); do
   if [ -n "$BLOBS" ]; then
    echo; echo "More than one Sony Vendor image was found. Please remove any additional files."
    echo
@@ -193,7 +193,7 @@ done
 if [ -z $BLOBS ]; then
   echo; echo The Sony Vendor partition image was not found in the current directory. Please
   echo download it from
-  echo https://developer.sonymobile.com/open-devices/list-of-devices-and-resources/
+  echo https://developer.sonymobile.com/downloads/software-binaries/software-binaries-for-aosp-marshmallow-android-6-0-1-kernel-3-10-loire/
   echo and unzip it into this directory.
   echo
   exit 1

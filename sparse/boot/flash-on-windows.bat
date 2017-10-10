@@ -6,7 +6,7 @@
 set tmpflashfile=tmpfile.txt
 set emmawebsite=https://developer.sonymobile.com/open-devices/flash-tool/how-to-download-and-install-the-flash-tool/
 set unlockwebsite=https://developer.sonymobile.com/unlockbootloader/
-set oemblobwebsite=https://developer.sonymobile.com/open-devices/list-of-devices-and-resources/
+set oemblobwebsite=https://developer.sonymobile.com/downloads/software-binaries/software-binaries-for-aosp-marshmallow-android-6-0-1-kernel-3-10-loire/
 
 echo(
 echo This is a Windows flashing script for Sony Xperia X device.
@@ -33,7 +33,7 @@ echo Searching a device with vendor id '%vendorid%'..
 :: F5122 - Xperia X Dual SIM
 :: F5321 - Xperia X Compact
 @call :getvar product
-findstr /R /C:"product: F5[13]2[12]" %tmpflashfile% >NUL 2>NUL
+findstr /R /C:"product: F512[12]" %tmpflashfile% >NUL 2>NUL
 if not errorlevel 1 GOTO no_error_product
 
 echo(
@@ -89,7 +89,7 @@ del %tmpflashfile% >NUL 2>NUL
 setlocal EnableDelayedExpansion
 
 :: Find the blob image. Make sure there's only one.
-for /r %%f in (vendor_loire_*.img) do (
+for /r %%f in (*_loire.img) do (
 if not defined blobfilename (
 :: Take only the filename and strip out the path which otherwise is there.
 :: This is to make sure that we do not face issues later with e.g. spaces in the path etc.
@@ -97,7 +97,7 @@ set blobfilename=%%~nxf
 ) else (
 echo(
 echo More than one Sony Vendor image was found in this directory.
-echo Please remove any additional files (vendor_loire_*.img).
+echo Please remove any additional files (*_loire.img).
 echo(
 exit /b 1
 )
