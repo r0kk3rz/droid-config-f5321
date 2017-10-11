@@ -164,7 +164,14 @@ IMAGES=(
 "boot ${SAILFISH_IMAGE_PATH}hybris-boot.img"
 )
 
-if [ "$(md5sum -c md5.lst --status;echo $?)" -eq "1" ]; then
+MD5BIN=md5sum
+$MD5BIN -h &> /dev/null
+ret=$?
+if [ $ret -eq 127 ]; then
+  MD5BIN=md5
+fi
+
+if [ "$($MD5BIN -c md5.lst --status;echo $?)" -eq "1" ]; then
   echo; echo "md5sum does not match, please download the package again."
   echo;
   exit 1;
