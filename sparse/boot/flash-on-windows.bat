@@ -97,7 +97,7 @@ set blobfilename=%%~nxf
 ) else (
 echo(
 echo More than one Sony Vendor image was found in this directory.
-echo Please remove any additional files ^(*_loire.img^).
+echo Please remove any additional files (*_loire.img).
 echo(
 exit /b 1
 )
