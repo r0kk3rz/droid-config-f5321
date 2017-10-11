@@ -6,7 +6,7 @@ Note: If you are a Linux or OS X user, your device's Android version is lower
 than 34.3.A.0.228 and you have already unlocked your device's bootloader, then 
 you will need to use Windows for one step of the flashing procedure.
 
-= STEP 1: GETTING AN Xperia™ X Compact =
+= STEP 1: GETTING AN XPERIA™ X COMPACT =
 
 Get an Xperia™ X Compact, model number F5321. To be able to replace the Sony Android
 system with Sailfish X, you will need to be able to unlock the bootloader of 
@@ -72,38 +72,17 @@ prepare your device for unlocking:
 * Accept the terms & conditions to proceed. Please note the details of how this
   process affects your Sony warranty.
 
-Now read and follow Sony's instructions on how to unlock the bootloader. Don't 
-miss the step to enable 'OEM unlock' from within Android beforehand.
+Now read and follow Sony's instructions on how to connect your device to your PC
+in fastbook mode and unlock the bootloader. Don't miss the step to enable 
+'OEM unlock' from within Android beforehand.
 
-= LINUX AND OS X =
-
-Neither Linux nor OS X will require any additional drivers to connect to the 
+Neither Linux nor OS X should require any additional drivers to connect to the 
 device in fastboot mode, but you will need to have installed the fastboot
 command itself: 
 
 * Debian/Ubuntu/.deb distros: apt-get install android-tools-fastboot
 * Fedora: yum install android-tools
 * OS X: brew install android-sdk
-
-= WINDOWS 7, 8 & 10 =
-
-On Windows, you shouldn't need to install the full Android Studio, as the 
-fastboot.exe tool you need is included in the Sailfish X archive. You will 
-however need to download and install the special fastboot drivers -
-you'll find a link to them in the Sony instructions.
-
-When your device is connected:
-* Open the 'Device Manager': On Windows 7, right-click the 'Computer' icon on 
-  the desktop and choose 'Manage'. When the Computer Management application
-  appears, choose the 'Device Manager' in the tree. On Windows 8 & 10, Device
-  Manager can be found by right-clicking the Start button, or by pressing
-  Windows+X on the keyboard.
-* Find the 'S1Boot Fastboot' device in the tree. If it is not correctly 
-  installed, it will show a warning sign. Right-click it and choose 'Update 
-  drivers', then 'Browse my computer for driver software', and point it to the
-  fastboot drivers you downloaded from Sony. 
-* Do not remove the fastboot drivers from your system once your device has 
-  been unlocked. They'll be needed for the actual flashing process too!
 
 = STEP 4: UPDATING AN UNLOCKED DEVICE TO THE LATEST ANDROID SOFTWARE VERSION =
 
