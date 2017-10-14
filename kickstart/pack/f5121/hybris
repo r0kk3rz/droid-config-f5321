@@ -39,7 +39,7 @@ ROOT_LOOP=$(/sbin/losetup -f)
 /sbin/e2fsck -f -y $ROOT_LOOP
 # The "on is al ready" sed hack is added to handle cases when resize2fs
 # outputs "The filesystem is already X blocks long" to stderr:
-BLOCKS=$(/sbin/resize2fs -M $ROOT_LOOP 2>&1 | tail -n 2 | sed "s/is already/on is al ready/" | /bin/grep "The filesystem on" | /bin/cut -d ' ' -f 7)
+BLOCKS=$(/sbin/resize2fs -M $ROOT_LOOP 2>&1 | tee /dev/tty | tail -n 2 | sed "s/is already/on is al ready/" | /bin/grep "The filesystem on" | /bin/cut -d ' ' -f 7)
 echo We got ourselves root blocks _ $BLOCKS _
 SIZE=$(/usr/bin/expr $BLOCKS \* 4096)
 echo after maths size _ $SIZE _
@@ -54,7 +54,7 @@ HOME_LOOP=$(/sbin/losetup -f)
 /sbin/e2fsck -f -y $HOME_LOOP
 # The "on is al ready" sed hack is added to handle cases when resize2fs
 # outputs "The filesystem is already X blocks long" to stderr:
-BLOCKS=$(/sbin/resize2fs -M $HOME_LOOP 2>&1 | tail -n 2 | sed "s/is already/on is al ready/" | /bin/grep "The filesystem on" | /bin/cut -d ' ' -f 7)
+BLOCKS=$(/sbin/resize2fs -M $HOME_LOOP 2>&1 | tee /dev/tty | tail -n 2 | sed "s/is already/on is al ready/" | /bin/grep "The filesystem on" | /bin/cut -d ' ' -f 7)
 echo We got ourselves home size _ $BLOCKS _
 SIZE=$(/usr/bin/expr $BLOCKS \* 4096)
 
