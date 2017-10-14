@@ -1,19 +1,19 @@
 # Feel free to disable non-critical HA parts during devel by commenting lines out
 # Generated in hadk by executing: rpm/dhd/helpers/add_new_device.sh
 
-Description: Pattern with packages for f5121 HW Adaptation
-Name: jolla-hw-adaptation-f5121
+Description: Pattern with packages for f5321 HW Adaptation
+Name: jolla-hw-adaptation-f5321
 Requires:
-- droid-hal-f5121
-- droid-hal-f5121-img-boot
-- droid-hal-f5121-img-recovery
-- droid-config-f5121-sailfish
-- droid-config-f5121-pulseaudio-settings
-- droid-config-f5121-policy-settings
-- droid-config-f5121-preinit-plugin
-- droid-config-f5121-flashing
-- droid-config-f5121-bluez5
-- droid-hal-version-f5121
+- droid-hal-f5321
+- droid-hal-f5321-img-boot
+- droid-hal-f5321-img-recovery
+- droid-config-f5321-sailfish
+- droid-config-f5321-pulseaudio-settings
+- droid-config-f5321-policy-settings
+- droid-config-f5321-preinit-plugin
+- droid-config-f5321-flashing
+- droid-config-f5321-bluez5
+- droid-hal-version-f5321
 
 # Hybris packages
 - libhybris-libEGL
@@ -71,5 +71,5 @@ Requires:
 # For devices where test_gps eventually gets a fix:
 - geoclue-provider-hybris
 
-Summary: Jolla HW Adaptation f5121
+Summary: Jolla HW Adaptation f5321
 

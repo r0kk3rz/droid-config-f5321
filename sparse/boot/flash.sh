@@ -129,7 +129,7 @@ echo "Fastboot command: $FASTBOOTCMD"
 
 PRODUCT="$($FASTBOOTCMD getvar product 2>&1 | head -n1 | cut -d ' ' -f2)"
 
-if [ -z "$(echo $PRODUCT | grep -e "F512[12]")" ]; then
+if [ -z "$(echo $PRODUCT | grep -e "F5[13]2[12]")" ]; then
   echo; echo "This script is not meant for device $PRODUCT."
   echo Please connect the right device and try again.
   echo;
