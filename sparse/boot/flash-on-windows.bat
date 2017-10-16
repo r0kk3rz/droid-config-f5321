@@ -33,7 +33,7 @@ echo Searching a device with vendor id '%vendorid%'..
 :: F5122 - Xperia X Dual SIM
 :: F5321 - Xperia X Compact
 @call :getvar product
-findstr /R /C:"product: F512[12]" %tmpflashfile% >NUL 2>NUL
+findstr /R /C:"product: F5[13]2[12]" %tmpflashfile% >NUL 2>NUL
 if not errorlevel 1 GOTO no_error_product
 
 echo(
