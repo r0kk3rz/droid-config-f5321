@@ -7,6 +7,7 @@ set tmpflashfile=tmpfile.txt
 set emmawebsite=https://developer.sonymobile.com/open-devices/flash-tool/how-to-download-and-install-the-flash-tool/
 set unlockwebsite=https://developer.sonymobile.com/unlockbootloader/
 set oemblobwebsite=https://developer.sonymobile.com/downloads/software-binaries/software-binaries-for-aosp-marshmallow-android-6-0-1-kernel-3-10-loire/
+set fastbootkillretval=0
 
 echo(
 echo This is a Windows flashing script for Sony Xperia X Compact device.
@@ -22,6 +23,12 @@ echo(
 pause
 call :sleep 3
 
+:: Ensure that tools have valid md5sum before using them
+@call :md5sum AdbWinApi.dll
+@call :md5sum AdbWinUsbApi.dll
+@call :md5sum fastboot.exe
+@call :md5sum flash-on-windows.bat
+
 :: Bus 002 Device 025: ID 0fce:0dde Sony Ericsson Mobile Communications AB Xperia Mini Pro Bootloader
 set vendorid=0x0fce
 set fastbootcmd=fastboot.exe -i %vendorid%
@@ -32,16 +39,35 @@ echo Searching a device with vendor id '%vendorid%'..
 :: F5121 - Xperia X
 :: F5122 - Xperia X Dual SIM
 :: F5321 - Xperia X Compact
+
 @call :getvar product
+
+:: In case the fastboot had to be terminated there was no devices found
+:: This means that the fastboot driver is not properly installed or device
+:: is not properly connected.
+if [%fastbootkillretval%] == [0] (
+echo(
+echo We did not find any devices with fastboot.
+echo(
+echo The device is not properly connected to your computer or
+echo you might be missing the required windows fastboot drivers for your device.
+echo(
+echo Go to the Windows Device Manager and verify that the fastboot driver for the
+echo device is properly installed.
+echo(
+pause
+exit /b 1
+)
+
+:: Verify that the device is right.
 findstr /R /C:"product: F5[13]2[12]" %tmpflashfile% >NUL 2>NUL
 if not errorlevel 1 GOTO no_error_product
 
 echo(
 echo The DEVICE this flashing script is meant for WAS NOT FOUND!
-echo You might be missing the required windows fastboot drivers for your device.
-echo Go to the Windows Device Manager and update the fastboot driver for the
-echo device.
 echo(
+echo This script found following device:
+type %tmpflashfile%
 pause
 exit /b 1
 
@@ -151,6 +177,7 @@ call :sleep 3
 :: In case the device is not online, fastboot will just hang forever thus
 :: kill it here so the script ends at some point.
 taskkill /im fastboot.exe /f >NUL 2>NUL
+set fastbootkillretval=%errorlevel%
 @exit /b 0
 
 :md5sum
@@ -169,10 +196,10 @@ taskkill /im fastboot.exe /f >NUL 2>NUL
 @set "md5sumold=%md5sumold: ="&rem %
 @IF NOT "%md5sumnew%" == "%md5sumold%" (
   @echo(
-  @echo MD5SUM '%md5sumnew%' of file %~1 does not match to md5.lst '%md5sumold%'.
+  @echo MD5SUM '%md5sumnew%' of file '%~1' does not match to '%md5sumold%' found from md5.lst.
   @call :exitflashfail
 )
-@echo MD5SUM '%md5sumnew%' match for %~1.
+@echo MD5SUM '%md5sumnew%' match for file '%~1'.
 :skip_md5sum
 @exit /b 0
 
