@@ -33,6 +33,7 @@ call :sleep 3
 set vendorid=0x0fce
 set fastbootcmd=fastboot.exe -i %vendorid%
 
+echo(
 echo Searching a device with vendor id '%vendorid%'..
 
 :: Ensure that we are flashing right device
@@ -90,6 +91,9 @@ exit /b 1
 
 :no_error_unlock
 
+echo(
+echo The device is unlocked for the flashing process. Continuing..
+
 :: Verify that the Sony release on the phone is new enough.
 @call :getvar version-baseband
 
@@ -111,6 +115,9 @@ start "" %emmawebsite%
 exit /b 1
 )
 
+echo(
+echo '%version2%' is new enough to support vendor partition. Continuing..
+
 del %tmpflashfile% >NUL 2>NUL
 setlocal EnableDelayedExpansion
 
@@ -128,6 +135,9 @@ echo(
 exit /b 1
 )
 )
+
+echo(
+echo Found '%blobfilename%' that will be used as vendor image. Continuing..
 
 :: Bail out if we don't have a blob image
 if not defined blobfilename (
