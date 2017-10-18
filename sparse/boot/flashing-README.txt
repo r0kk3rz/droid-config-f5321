@@ -1,4 +1,4 @@
-= SAILFISH X FOR SONY XPERIA™ X FLASHING GUIDE =
+= SAILFISH X FOR SONY XPERIA™ X COMPACT FLASHING GUIDE =
 
 = FOR LINUX, WINDOWS AND OS X =
 
@@ -6,16 +6,16 @@ Note: If you are a Linux or OS X user, your device's Android version is lower
 than 34.3.A.0.228 and you have already unlocked your device's bootloader, then 
 you will need to use Windows for one step of the flashing procedure.
 
-= STEP 1: GETTING AN XPERIA™ X =
+= STEP 1: GETTING AN Xperia™ X Compact =
 
-Get an Xperia™ X, model number F5121. To be able to replace the Sony Android
+Get an Xperia™ X Compact, model number F5321. To be able to replace the Sony Android
 system with Sailfish X, you will need to be able to unlock the bootloader of 
 your device so that it can be flashed with a new operating system. This process
 is supported by Sony as part of their Open Devices programme:
 
 https://developer.sonymobile.com/open-devices/
  
-The best way to get an unlockable device is to buy is a brand new Xperia™ X in 
+The best way to get an unlockable device is to buy is a brand new Xperia™ X Compact in 
 a sales box. If you are tempted to buy second-hand please be aware that there 
 are some variants for which the bootloader cannot be unlocked: for example 
 devices that have at some point been SIM locked, even if they have subsequently
@@ -55,7 +55,7 @@ Make sure that the system language of your Xperia™ device is set to English
 before you continue.
 
 Go to https://developer.sonymobile.com/unlockbootloader/ website and select the
-model of your device Xperia™ X. You should see additional instructions to
+model of your device Xperia™ X Compact. You should see additional instructions to
 prepare your device for unlocking:
 
 * Enter your e-mail address, accept the terms and conditions, then submit 
@@ -143,7 +143,7 @@ license agreement.
 For convenience, these components have already been packaged into their own
 partition image, ready to flash to your device. 
 
-The Sony binary image for the Xperia™ X can be found here:
+The Sony binary image for the Xperia™ X Compact can be found here:
 
 https://developer.sonymobile.com/downloads/software-binaries/software-binaries-for-aosp-marshmallow-android-6-0-1-kernel-3-10-loire/
 

@@ -9,7 +9,7 @@ set unlockwebsite=https://developer.sonymobile.com/unlockbootloader/
 set oemblobwebsite=https://developer.sonymobile.com/downloads/software-binaries/software-binaries-for-aosp-marshmallow-android-6-0-1-kernel-3-10-loire/
 
 echo(
-echo This is a Windows flashing script for Sony Xperia X device.
+echo This is a Windows flashing script for Sony Xperia X Compact device.
 echo(
 echo Power on the device in fastboot mode, by doing the following:
 echo 1. Turn off your Xperia.
@@ -33,7 +33,7 @@ echo Searching a device with vendor id '%vendorid%'..
 :: F5122 - Xperia X Dual SIM
 :: F5321 - Xperia X Compact
 @call :getvar product
-findstr /R /C:"product: F512[12]" %tmpflashfile% >NUL 2>NUL
+findstr /R /C:"product: F5[13]2[12]" %tmpflashfile% >NUL 2>NUL
 if not errorlevel 1 GOTO no_error_product
 
 echo(
@@ -97,7 +97,7 @@ set blobfilename=%%~nxf
 ) else (
 echo(
 echo More than one Sony Vendor image was found in this directory.
-echo Please remove any additional files ^(*_loire.img^).
+echo Please remove any additional files (*_loire.img).
 echo(
 exit /b 1
 )
