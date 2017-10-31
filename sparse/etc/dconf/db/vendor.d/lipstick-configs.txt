@@ -1,3 +1,6 @@
+[desktop/lipstick-jolla-home]
+reboot_warning_on_sim_remove=true
+
 [lipstick/screen/primary]
 physicalDotsPerInch=320
 width=720
