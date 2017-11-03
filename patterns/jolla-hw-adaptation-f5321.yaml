@@ -71,5 +71,9 @@ Requires:
 # For devices where test_gps eventually gets a fix:
 - geoclue-provider-hybris
 
+# Needed since 2.1.2 otherwise mic builds fail and apparently not included as
+# an RPM dependency by any packages
+- droid-flashing-tools
+
 Summary: Jolla HW Adaptation f5321
 
