@@ -18,5 +18,9 @@ Requires:
 - apkd-config-home
 - mapplauncherd-booster-silica-qt5-media
 
+- patterns-sailfish-consumer-generic
+- patterns-sailfish-store-applications
+- pattern:sailfish-porter-tools
+
 Summary: Jolla Configuration f5321
 

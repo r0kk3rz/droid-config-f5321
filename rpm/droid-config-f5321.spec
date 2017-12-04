@@ -20,5 +20,7 @@ Provides: ofono-configs
 # Device-specific usb-moded configuration
 Provides: usb-moded-configs
 
+%define community_adaptation 1
+
 %include droid-configs-device/droid-configs.inc
 
