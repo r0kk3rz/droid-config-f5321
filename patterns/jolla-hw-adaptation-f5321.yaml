@@ -63,17 +63,17 @@ Requires:
 - usb-moded
 
 # hammerhead, grouper, and maguro use this in scripts, so include for all
-- rfkill
+#- rfkill
 
 # enable device lock and allow to select untrusted software
-- jolla-devicelock-daemon-encsfa
+#- jolla-devicelock-daemon-encsfa
 
 # For devices where test_gps eventually gets a fix:
 #- geoclue-provider-hybris
 
 # Needed since 2.1.2 otherwise mic builds fail and apparently not included as
 # an RPM dependency by any packages
-- droid-flashing-tools
+#- droid-flashing-tools
 
 Summary: Jolla HW Adaptation f5321
 
