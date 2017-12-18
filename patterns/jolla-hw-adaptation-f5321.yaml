@@ -73,7 +73,7 @@ Requires:
 
 # Needed since 2.1.2 otherwise mic builds fail and apparently not included as
 # an RPM dependency by any packages
-#- droid-flashing-tools
+- droid-flashing-tools
 
 Summary: Jolla HW Adaptation f5321
 
