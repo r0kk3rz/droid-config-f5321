@@ -19,10 +19,11 @@ Requires:
 - libhybris-libEGL
 - libhybris-libGLESv2
 - libhybris-libwayland-egl
+
 # This new reworked libhybris (minimalhooks) now contains the linker, but
 # eventually will require to split into libsf as well for mediatek devices.
 # Keeping everything in detritus for now before splitting
-- libhybris-detritus
+#- libhybris-detritus
 
 # Bluetooth
 - bluetooth-rfkill-event-hciattach
@@ -31,8 +32,8 @@ Requires:
 - hybris-libsensorfw-qt5
 
 # Vibra
-- ngfd-plugin-droid-vibrator
-- qt5-feedback-haptics-droid-vibrator
+- ngfd-plugin-native-vibrator
+- qt5-feedback-haptics-native-vibrator
 
 # Needed for /dev/touchscreen symlink
 - qt5-plugin-generic-evdev

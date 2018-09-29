@@ -19,7 +19,7 @@ if [[ -a $DEVICE_VERSION_FILE ]]; then
   DEVICE_VERSION=-$VERSION_ID
 fi
 
-source ./sailfish-release
+source ./os-release
 if [ "$SSU_RELEASE_TYPE" = "rnd" ]; then
   RELEASENAME=$NAME-${EXTRA_NAME// /_}$SAILFISH_FLAVOUR-$VERSION_ID-$DEVICE$DEVICE_VERSION
 else
@@ -94,7 +94,7 @@ rmdir $FIMAGE_TEMP
 
 # To make the file magic right lets convert to single file sparse image.
 # 3456M size is selected so that we always will have only one file as output.
-/usr/bin/img2simg -C 3456M fimage.img
+/usr/bin/img2simg fimage.img fimage.img001
 rm fimage.img
 
 /sbin/losetup -d $LVM_LOOP
@@ -104,12 +104,12 @@ mv temp.img sailfish.img
 /usr/bin/atruncate sailfish.img
 # To make the file magic right lets convert to single file sparse image.
 # 3456M size is selected so that we always will have only one file as output.
-/usr/bin/img2simg -C 3456M sailfish.img
+/usr/bin/img2simg sailfish.img sailfish.img001
 rm sailfish.img
 
 chmod 755 flash.*
 
-FILES="flash* *.img* *.exe *.dll"
+FILES="flash* *.img* *.exe *.dll *-release"
 FILES_TO_COPY="*.urls"
 
 mkdir -p ${RELEASENAME}

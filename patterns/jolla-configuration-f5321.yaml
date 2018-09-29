@@ -15,7 +15,6 @@ Requires:
 - sd-utils
 - geoclue-provider-mlsdb
 - jolla-settings-system-flashlight
-- apkd-config-home
 - mapplauncherd-booster-silica-qt5-media
 
 - patterns-sailfish-consumer-generic
